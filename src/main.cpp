@@ -1,6 +1,10 @@
 #include <iostream>
 
+#include "functions.h"
+
 int main() {
-    std::cout << "Hello World!" << "\n";
+
+	mandelbrot();
+
     return 0;
 }
