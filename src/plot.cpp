@@ -16,7 +16,7 @@ std::tuple<int, int, int> get_rgb(int n, int iter_max)
 }
 
 
-void plot(window<int>& scr, std::vector<int>& colors, int iter_max, const char* fname)
+void plot(window<int>& scr, std::vector<std::vector<int>>& colors, int iter_max, const char* fname)
 {
 #ifdef FREEIMAGE_LIB
 	FreeImage_Initialise();
@@ -30,11 +30,21 @@ void plot(window<int>& scr, std::vector<int>& colors, int iter_max, const char* 
 	int k = 0;
 	std::tuple<int, int, int> rgb;
 
+	int slice_index = 0;
+	int elem_in_slice_index = 0;
+
 	for(int i = scr.y_min(); i < scr.y_max(); ++i)
 	{
 		for(int j = scr.x_min(); j < scr.x_max(); ++j)
 		{
-			int n = colors[k];
+			int n = colors[slice_index][elem_in_slice_index];
+			++elem_in_slice_index;
+
+			if(elem_in_slice_index >= colors[slice_index].size())
+			{
+				elem_in_slice_index = 0;
+				slice_index++;
+			}
 
 			rgb = get_rgb(n, iter_max);
 
